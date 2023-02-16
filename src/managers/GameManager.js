@@ -8,9 +8,10 @@ export const getGames = () => {
 }
 
 export const createGame = (game) => {
-    return fetch('http://localhost:8088/games',
+    return fetch('http://localhost:8000/games',
         { method: "POST", body: JSON.stringify(game),
-        headers: {'Content-Type':'application/json'}})
+        headers: {'Content-Type':'application/json',
+        "Authorization": `Token ${localStorage.getItem("lu_token")}`}})
         .then(res => res.json())
         .catch(console.log(game))
 }

@@ -14,7 +14,7 @@ export const GameForm = () => {
     */
     const [currentGame, setCurrentGame] = useState({
         name: "",
-        game_type:0,
+        game_type:1,
         description:"",
         maker:"",
         skill_level: "easy",
