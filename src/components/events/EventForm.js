@@ -64,7 +64,7 @@ export const EventForm = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="maker">Game Maker: </label>
+                    <label htmlFor="maker">Date: </label>
                     <input type="datetime-local" name="title" required autoFocus className="form-control"
                         value={currentEvent.date}
                         onChange={

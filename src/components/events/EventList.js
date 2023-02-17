@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { convertDateTime, getEvents } from "../../managers/EventManager.js"
+import { convertDateTime, deleteEvent, getEvents } from "../../managers/EventManager.js"
 
 export const EventList = (props) => {
     const [ events, setEvents ] = useState([])
@@ -24,6 +24,14 @@ export const EventList = (props) => {
                         <div className="event__title">{event.name}</div>
                         <div className="event__description">{event.description}</div>
                         <div className="event__date">{convertDateTime(event.date)}</div>
+                        <button className="edit" onClick={()=> navigate(`/events/edit/${event.id}`)}>Edit</button>
+                        <button className="delete" onClick={(evt)=> {
+                            deleteEvent(event.id)
+                            getEvents().then(data => {
+                                setEvents(data)
+                                window.location.reload(false);
+                            })
+                        }}>Delete</button>
                     </section>
                 })
             }

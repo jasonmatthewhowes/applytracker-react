@@ -36,3 +36,39 @@ export const convertDateTime = (dateTime)  => {
     return `${month}/${day}/${year} ${hour12}:${minute} ${amPm}`;
   }
 
+
+
+  export const updateEvent = (event) => {
+    return fetch(`http://localhost:8000/events/${event.id}`, 
+    { method: "PUT", body: JSON.stringify(event),
+    headers: {'Content-Type':'application/json',
+    "Authorization": `Token ${localStorage.getItem("lu_token")}`}})
+    .then(res => res.json())
+    .catch(err => console.log(event))
+}
+
+
+export const getSingleEvent = (eventId) => {
+    return fetch(`http://localhost:8000/events/${eventId}`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        }
+    })
+        .then(response => response.json())
+}
+
+
+export const removeZ = (datestring) => {
+    let string = datestring
+    string = string.substring(0, string.length-8);
+console.log(string) 
+    return string
+}
+
+
+export const deleteEvent = (eventId) => {
+    fetch(`http://localhost:8000/events/${eventId}`,{
+                    method:"DELETE", headers: {'Content-Type':'application/json',
+                    "Authorization": `Token ${localStorage.getItem("lu_token")}`
+                }})
+}

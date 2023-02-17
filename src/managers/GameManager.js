@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 export const getGames = () => {
     return fetch("http://localhost:8000/games", {
         headers:{
@@ -24,3 +26,31 @@ export const getGameTypes = () => {
     })
         .then(response => response.json())
 }
+
+
+export const updateGame = (game) => {
+    return fetch(`http://localhost:8000/games/${game.id}`, 
+    { method: "PUT", body: JSON.stringify(game),
+    headers: {'Content-Type':'application/json',
+    "Authorization": `Token ${localStorage.getItem("lu_token")}`}})
+    .then(res => res.json())
+    .catch(err => console.log(game))
+}
+
+
+export const getSingleGame = (gameId) => {
+    return fetch(`http://localhost:8000/games/${gameId}`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        }
+    })
+        .then(response => response.json())
+}
+
+export const deleteGame = (gameId) => {
+    fetch(`http://localhost:8000/games/${gameId}`,{
+                    method:"DELETE", headers: {'Content-Type':'application/json',
+                    "Authorization": `Token ${localStorage.getItem("lu_token")}`
+                }})
+}
+
