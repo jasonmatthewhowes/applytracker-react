@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { convertDateTime, deleteEvent, getEvents } from "../../managers/EventManager.js"
+import { convertDateTime, deleteEvent, getEvents, joinEvent, leaveEvent } from "../../managers/EventManager.js"
 
 export const EventList = (props) => {
     const [ events, setEvents ] = useState([])
@@ -32,6 +32,24 @@ export const EventList = (props) => {
                                 window.location.reload(false);
                             })
                         }}>Delete</button>
+                        {event.joined?
+                                <button className="join" onClick={(evt) => {
+                                    leaveEvent(event.id)
+                                    getEvents().then(data => {
+                                        setEvents(data)
+                                        window.location.reload(false);
+                                    })
+                                }}>Leave</button>
+                                :
+                            <button className="join" onClick={(evt) => {
+                                joinEvent(event.id)
+                                getEvents().then(data => {
+                                    setEvents(data)
+                                    window.location.reload(false);
+                                })
+                            }}>Join</button>
+                            
+                             }
                     </section>
                 })
             }
