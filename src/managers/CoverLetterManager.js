@@ -1,5 +1,5 @@
-export const getJobs = () => {
-    return fetch("http://localhost:8000/jobs", {
+export const getCoverLetters = () => {
+    return fetch("http://localhost:8000/cover_letters", {
         headers:{
             "Authorization": `Token ${localStorage.getItem("lu_token")}`
         }
@@ -9,15 +9,15 @@ export const getJobs = () => {
 
 
 
-export const deleteJob = (jobId) => {
-    fetch(`http://localhost:8000/jobs/${jobId}`,{
+export const deleteCoverLetter = (cover_letterId) => {
+    fetch(`http://localhost:8000/cover_letters/${cover_letterId}`,{
                     method:"DELETE", headers: {'Content-Type':'application/json',
                     "Authorization": `Token ${localStorage.getItem("lu_token")}`
                 }})
 }
 
-export const getSingleJob = (jobId) => {
-    return fetch(`http://localhost:8000/jobs/${jobId}`, {
+export const getSingleCoverLetter = (cover_letterId) => {
+    return fetch(`http://localhost:8000/cover_letters/${cover_letterId}`, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("lu_token")}`
         }
@@ -26,12 +26,12 @@ export const getSingleJob = (jobId) => {
 }
 
 
-export const updateJob = (job) => {
-    return fetch(`http://localhost:8000/jobs/${job.id}`, 
-    { method: "PUT", body: JSON.stringify(job),
+export const updateCoverLetter = (cover_letter) => {
+    return fetch(`http://localhost:8000/cover_letters/${cover_letter.id}`, 
+    { method: "PUT", body: JSON.stringify(cover_letter),
     headers: {'Content-Type':'application/json',
     "Authorization": `Token ${localStorage.getItem("lu_token")}`}})
     .then(res => res.json())
-    .catch(err => console.log(job))
+    .catch(err => console.log(cover_letter))
 }
 

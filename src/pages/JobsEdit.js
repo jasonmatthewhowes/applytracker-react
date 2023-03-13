@@ -1,85 +1,229 @@
-import React, { useRef } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { registerUser } from "../../managers/AuthManager"
-import "./Auth.css"
+import { useState, useEffect } from "react"
+import { useNavigate, useParams } from 'react-router-dom'
+import { getCompanies } from "../managers/CompanyManager"
+import { getContacts } from "../managers/ContactManager"
+import { getCoverLetters } from "../managers/CoverLetterManager"
+import { getJobs, createJob, getSingleJob } from "../managers/JobManager"
+import { getResumes } from "../managers/ResumeManager"
 
-export const JobsEdit = () => {
-    const firstName = useRef()
-    const lastName = useRef()
-    const username = useRef()
-    const bio = useRef()
-    const password = useRef()
-    const verifyPassword = useRef()
-    const passwordDialog = useRef()
+
+
+export const JobEdit = () => {
     const navigate = useNavigate()
+    const [jobList, setJobList] = useState([])
+    
 
-    const handleRegister = (e) => {
-        e.preventDefault()
+    /*
+        Since the input fields are bound to the values of
+        the properties of this state variable, you need to
+        provide some default values.
+    */
 
-        if (password.current.value === verifyPassword.current.value) {
-            const newUser = {
-                "username": username.current.value,
-                "first_name": firstName.current.value,
-                "last_name": lastName.current.value,
-                "bio": bio.current.value,
-                "password": password.current.value
-            }
 
-            registerUser(newUser)
-                .then(res => {
-                    if ("token" in res) {
-                        localStorage.setItem("lu_token", res.token)
-                        navigate("/")
-                    }
-                })
-        } else {
-            passwordDialog.current.showModal()
-        }
+    const [currentJob, setCurrentJob] = useState({
+        id:0,
+        user:0,
+        name: "",
+        jobPostLink:"",
+        resumeId:0,
+        coverLetterId: 0,
+        applied: "",
+        dueDate:"",
+        description:"",
+        jobService: 0,
+        role: 0,
+        timestamp:"",
+        companyJobs: 0,
+        contactId: 0,
+        temperature: 0 
+    })
+
+    const [companyList, setCompanyList] = useState([])
+    const [resumeList, setResumeList] = useState ([])
+    const [coverLetterList, setCoverLetterList] = useState([])
+    const [contactList, setContactList] = useState([])
+
+
+
+    const { JobId } = useParams()
+    
+    useEffect(() => {
+        getSingleJob(JobId).then(data => setCurrentJob(data))
+    }, [])
+
+    useEffect(() => {
+        getJobs().then(data => setJobList(data))
+    }, [])
+    useEffect(() => {
+        getCompanies().then(data => setCompanyList(data))
+    }, [])
+    useEffect(() => {
+        getResumes().then(data => setResumeList(data))
+    }, [])
+    useEffect(() => {
+        getCoverLetters().then(data => setCoverLetterList(data))
+    }, [])
+    useEffect(() => {
+        getContacts().then(data => setContactList(data))
+    }, [])
+    
+    
+
+
+    /*
+    const changejobState = (domJob) => {
+        // TODO: Complete the onChange function
     }
-
+    */
     return (
-        <main style={{ textAlign: "center" }}>
+        <form className="jobForm">
+            <h2 className="jobForm__title">Edit Job</h2>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="name">Job Name: </label>
+                    <input type="text" name="title" required autoFocus className="form-control"
+                        value={currentJob.name}
+                        onChange={
+                            (evt) => {
+                                const copy = {...currentJob}
+                                copy.name =evt.target.value
+                                setCurrentJob(copy)
+                            }}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="name">Posting URL Link: </label>
+                    <input type="text" name="job_post_link" required autoFocus className="form-control"
+                        value={currentJob.jobPostLink}
+                        onChange={
+                            (evt) => {
+                                const copy = {...currentJob}
+                                copy.jobPostLink =evt.target.value
+                                setCurrentJob(copy)
+                            }}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="name">Application Sent: </label>
+                    <input type="datetime-local" name="applied" required autoFocus className="form-control"
+                        value={currentJob.applied}
+                        onChange={
+                            (evt) => {
+                                const copy = {...currentJob}
+                                copy.applied =evt.target.value
+                                setCurrentJob(copy)
+                            }}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="name">Job Name: </label>
+                    <input type="number" name="temperature" required autoFocus className="form-control"
+                        value={currentJob.temperature}
+                        onChange={
+                            (evt) => {
+                                const copy = {...currentJob}
+                                copy.temperature =evt.target.value
+                                setCurrentJob(copy)
+                            }}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="description">Description: </label>
+                    <input type="text" name="title" required autoFocus className="form-control"
+                        value={currentJob.description}
+                        onChange={
+                            (evt) => {
+                                const copy = {...currentJob}
+                                copy.description =evt.target.value
+                                setCurrentJob(copy)
+                            }}
+                    />
+                </div>
+                
+                <div className="form-group">
+                    <label htmlFor="maker">Due Date: </label>
+                    <input type="datetime-local" name="title" required autoFocus className="form-control"
+                        value={currentJob.dueDate}
+                        onChange={
+                            (evt) => {
+                                const copy = {...currentJob}
+                                copy.dueDate =evt.target.value
+                                setCurrentJob(copy)
+                            }}
+                    />
+                </div>
 
-            <dialog className="dialog dialog--password" ref={passwordDialog}>
-                <div>Passwords do not match</div>
-                <button className="button--close" onClick={e => passwordDialog.current.close()}>Close</button>
-            </dialog>
+                <select onChange={
+                    (evt) => {
+                    const copy= {...currentJob}
+                    copy.job= evt.target.value
+                    setCurrentJob(copy)
+            }}>{jobList.map(option => (
+                    <option key={option.id} value={option.id}>{option.name}</option>
+                ))} </select>
+                <select onChange={
+                    (evt) => {
+                    const copy= {...currentJob}
+                    copy.job= evt.target.value
+                    setCurrentJob(copy)
+            }}>{jobList.map(option => (
+                    <option key={option.id} value={option.id}>{option.name}</option>
+                ))} </select>
+                <select onChange={
+                    (evt) => {
+                    const copy= {...currentJob}
+                    copy.job= evt.target.value
+                    setCurrentJob(copy)
+            }}>{jobList.map(option => (
+                    <option key={option.id} value={option.id}>{option.name}</option>
+                ))} </select>
+                <select onChange={
+                    (evt) => {
+                    const copy= {...currentJob}
+                    copy.job= evt.target.value
+                    setCurrentJob(copy)
+            }}>{jobList.map(option => (
+                    <option key={option.id} value={option.id}>{option.name}</option>
+                ))} </select>
+                <select onChange={
+                    (evt) => {
+                    const copy= {...currentJob}
+                    copy.job= evt.target.value
+                    setCurrentJob(copy)
+            }}>{jobList.map(option => (
+                    <option key={option.id} value={option.id}>{option.name}</option>
+                ))} </select>
+                <select onChange={
+                    (evt) => {
+                    const copy= {...currentJob}
+                    copy.job= evt.target.value
+                    setCurrentJob(copy)
+            }}>{jobList.map(option => (
+                    <option key={option.id} value={option.id}>{option.name}</option>
+                ))} </select>
+            
+                
+            </fieldset>
 
-            <form className="form--login" onSubmit={handleRegister}>
-                <h1 className="h3 mb-3 font-weight-normal">Register an account</h1>
-                <fieldset>
-                    <label htmlFor="firstName"> First Name </label>
-                    <input ref={firstName} type="text" name="firstName" className="form-control" placeholder="First name" required autoFocus />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="lastName"> Last Name </label>
-                    <input ref={lastName} type="text" name="lastName" className="form-control" placeholder="Last name" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="inputUsername">Username</label>
-                    <input ref={username} type="text" name="username" className="form-control" placeholder="Username" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="inputPassword"> Password </label>
-                    <input ref={password} type="password" name="password" className="form-control" placeholder="Password" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="verifyPassword"> Verify Password </label>
-                    <input ref={verifyPassword} type="password" name="verifyPassword" className="form-control" placeholder="Verify password" required />
-                </fieldset>
-                <fieldset>
-                    <label htmlFor="verifyPassword"> Bio </label>
-                    <textarea ref={bio} name="bio" className="form-control" placeholder="Let other gamers know a little bit about you..." />
-                </fieldset>
-                <fieldset style={{
-                    textAlign: "center"
-                }}>
-                    <button className="btn btn-1 btn-sep icon-send" type="submit">Register</button>
-                </fieldset>
-            </form>
-            <section className="link--register">
-                Already registered? <Link to="/login">Login</Link>
-            </section>
-        </main>
+            {/* TODO: create the rest of the input fields */}
+
+            <button type="submit"
+                onClick={evt => {
+                    // PrJob form from being submitted
+                    evt.prJobDefault()
+
+                    const Job = {
+                    name: currentJob.name,
+                    job:parseInt(currentJob.job),
+                    description: currentJob.description,
+                    date:currentJob.date,
+                    }
+
+                    // Send POST request to your API
+                    createJob(Job)
+                        .then(() => navigate("/Jobs"))
+                }}
+                className="btn btn-primary">Save</button>
+        </form>
     )
 }
