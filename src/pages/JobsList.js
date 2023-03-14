@@ -28,15 +28,17 @@ const TableHeader = () => (
    
 )
 
-const TableBody = ({ jobs }) => (
+const TableBody = ({ jobs, navigate }) => 
+
+(
     
     <tbody>
         {jobs.map(job => (
             <tr key={job.id}>
                 <td>{job.applied}</td>
                 <td>{job.companyjobs.name}</td>
-                <td>{job.contact.full_name}</td>
-          <td><a href={job.cover_letter.cover_letter_url} target="_blank">{job.cover_letter.name}</a></td>
+                <td>{job.contact?.full_name}</td>
+          <td><a href={job.cover_letter?.cover_letter_url} target="_blank">{job.cover_letter?.name}</a></td>
                 <td>{job.name}</td>
                 <td>{job.description}</td>
                 <td>{job.due_date}</td>
@@ -44,7 +46,7 @@ const TableBody = ({ jobs }) => (
                 <td>{job.resume.resume_name}</td>
                 <td>{job.role.name}</td>
                 <td>{job.temperature}</td>
-                <td><button>Detail</button></td>
+                <td><button onClick={() => navigate(`/jobs/edit/${job.id}`)}>Detail</button></td>
                 
                 
             </tr>
@@ -61,12 +63,7 @@ export const JobList = (props) => {
         getJobs().then(data => setJobs(data))
     }, [])
 
-    const handleDelete = (id) => {
-        deleteJob(id).then(() => {
-            const updatedJobs = jobs.filter(job => job.id !== id)
-            setJobs(updatedJobs)
-        })
-    }
+
 
     console.log(jobs)
     return (
@@ -75,9 +72,11 @@ export const JobList = (props) => {
         <h2>Jobs List</h2>
         <table className="blueTable">
             <TableHeader />
-            <TableBody jobs={jobs} />
+            <TableBody jobs={jobs} navigate={navigate} />
         </table>
-        <button>Add Job Opportunity</button>
+        <button onClick={ evt => {
+                     navigate("/createjob")
+                }}>Create new job opportunity</button>
         </div>
         </>
     )

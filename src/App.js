@@ -10,6 +10,8 @@ import Products from "./pages/Products";
 import {Reports} from "./pages/Reports";
 import { JobList } from "./pages/JobsList";
 import { Login } from "./components/auth/Login";
+import { JobEdit } from "./pages/JobsEdit";
+import { JobCreate } from "./pages/JobsCreate";
 
 export default function App() {
   return (
@@ -20,7 +22,9 @@ export default function App() {
           <Route path="/" exact element={< Reports />} />
           <Route path="/products" element={< Reports />} />
           <Route path="/jobs" element={< JobList />} />
+          <Route path="/createjob" element={< JobCreate />} />
           <Route path="/login" element={< Login />} />
+          <Route path="/jobs/edit/:jobId" element={< JobEdit />} />
         </Routes>
         </>
     

@@ -8,9 +8,10 @@ import { getJobs, createJob, getSingleJob, updateJob, deleteJob, getJobServices 
 import { getResumes } from "../managers/ResumeManager"
 import { getAllRoles } from "../managers/RoleManager"
 import "./JobsList.css"
+// import { StaticExample } from "./CompanyCreate"
 
 
-export const JobEdit = () => {
+export const JobCreate = () => {
     const navigate = useNavigate()
     const [jobList, setJobList] = useState([])
     
@@ -24,7 +25,7 @@ export const JobEdit = () => {
 
     const [currentJob, setCurrentJob] = useState({
         id:0,
-        user:0,
+        // user:0,
         name: "",
         job_post_link:"",
         resume:{
@@ -59,7 +60,7 @@ export const JobEdit = () => {
             full_name:"",
             email:""
         },
-        temperature: 0 
+        temperature: 5 
     })
 
     const [companyList, setCompanyList] = useState([])
@@ -69,11 +70,11 @@ export const JobEdit = () => {
     const [roleList, setRoleList] = useState([])
     const [jobServiceList, setJobServiceList] = useState([])
 
-    const { jobId } = useParams()
+    // const { jobId } = useParams()
     
-    useEffect(() => {
-        getSingleJob(jobId).then(data => setCurrentJob(data))
-    }, [])
+    // useEffect(() => {
+    //     getSingleJob(jobId).then(data => setCurrentJob(data))
+    // }, [])
 
     useEffect(() => {
         getJobs().then(data => setJobList(data))
@@ -98,7 +99,6 @@ export const JobEdit = () => {
     }, [])
 
     
-    
 
 
     /*
@@ -108,7 +108,7 @@ export const JobEdit = () => {
     */
     return (
         <form className="jobForm">
-            <h2 className="jobForm__title">Edit Job</h2>
+            <h2 className="jobForm__title">Create a Job Opportunity</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="name">Job Name: </label>
@@ -147,7 +147,7 @@ export const JobEdit = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="name">Temperature</label>
+                    <label htmlFor="name">Temperature (<em>Choose a number 1-10 where 1 is cold and 10 is hot</em>)</label>
                     <input type="number" name="temperature" required autoFocus className="form-control"
                         value={currentJob.temperature}
                         onChange={
@@ -189,25 +189,32 @@ export const JobEdit = () => {
                     const copy= {...currentJob}
                     copy.companyjobs.id= evt.target.value
                     setCurrentJob(copy)
-            }}>{companyList.map(option => (
+            }}>
+            <option value="">Select a company</option>
+            {companyList.map(option => (
                     <option key={option.id} value={option.id}>{option.name}</option>
                 ))} </select>
+                
                 <label>Resume:</label>
-                <select className="form-group" onChange={
-                    (evt) => {
-                    const copy= {...currentJob}
-                    copy.resume.id= evt.target.value
-                    setCurrentJob(copy)
-            }}>{resumeList.map(option => (
-                    <option key={option.id} value={option.id}>{option.resume_name}</option>
-                ))} </select>
+               <select className="form-group" onChange={
+         (evt) => {
+         const copy= {...currentJob}
+         copy.resume.id= evt.target.value
+         setCurrentJob(copy)
+ }}>
+ <option value="">Select a resume</option>
+ {resumeList.map(option => (
+         <option key={option.id} value={option.id}>{option.resume_name}</option>
+     ))} </select>
                 <label>Cover Letter:</label>
                 <select className="form-group" onChange={
                     (evt) => {
                     const copy= {...currentJob}
                     copy.cover_letter.id= evt.target.value
                     setCurrentJob(copy)
-            }}>{coverLetterList.map(option => (
+            }}>
+            <option value="">Select a cover letter</option>
+            {coverLetterList.map(option => (
                     <option key={option.id} value={option.id}>{option.name}</option>
                 ))} </select>
                 <label>Contact:</label>
@@ -216,7 +223,9 @@ export const JobEdit = () => {
                     const copy= {...currentJob}
                     copy.contact.id= evt.target.value
                     setCurrentJob(copy)
-            }}>{contactList.map(option => (
+            }}>
+            <option value="">Select a contact</option>
+            {contactList.map(option => (
                     <option key={option.id} value={option.id}>{option.full_name}</option>
                 ))} </select>
                 <label>Role:</label>
@@ -225,10 +234,12 @@ export const JobEdit = () => {
                     const copy= {...currentJob}
                     copy.role.id= evt.target.value
                     setCurrentJob(copy)
-            }}>{roleList.map(option => (
+            }}>
+            <option value="">Select a job role</option>
+            {roleList.map(option => (
                     <option key={option.id} value={option.id}>{option.name}</option>
                 ))} </select>
-                              <label>Job Listing Service:</label>
+                <label>Job Listing Service:</label>
                 <select className="form-group" onChange={
                     (evt) => {
                     const copy= {...currentJob}
@@ -241,10 +252,9 @@ export const JobEdit = () => {
                 ))} </select>
                 
                 
-                
             </fieldset>
 
-        
+            {/* <StaticExample /> */}
 
             <button type="submit"
                 onClick={evt => {
@@ -268,14 +278,13 @@ export const JobEdit = () => {
                     }
 
                     // Send POST request to your API
-                    updateJob(job)
+                    createJob(job)
                         .then(() => navigate("/jobs"))
                 }}
-                >Save</button>
+                >Create</button>
                 <button onClick={ evt => {
-                    deleteJob(currentJob.id)
-                    .then(() => navigate("/jobs"))
-                }}>Delete</button>
+                     navigate("/jobs")
+                }}>Cancel</button>
         </form>
     )
 }

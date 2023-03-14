@@ -35,3 +35,21 @@ export const updateJob = (job) => {
     .catch(err => console.log(job))
 }
 
+export const createJob = (event) => {
+    return fetch('http://localhost:8000/jobs',
+        { method: "POST", body: JSON.stringify(event),
+        headers: {'Content-Type':'application/json',
+        "Authorization": `Token ${localStorage.getItem("lu_token")}`}})
+        .then(res => res.json())
+        .catch(console.log(event))
+}
+
+
+export const getJobServices = () => {
+    return fetch("http://localhost:8000/job_services", {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        }
+    })
+        .then(response => response.json())
+}
