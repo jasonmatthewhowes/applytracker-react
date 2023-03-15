@@ -35,3 +35,11 @@ export const updateResume = (resume) => {
     .catch(err => console.log(resume))
 }
 
+export const createResume = (event) => {
+    return fetch('http://localhost:8000/resumes',
+        { method: "POST", body: JSON.stringify(event),
+        headers: {'Content-Type':'application/json',
+        "Authorization": `Token ${localStorage.getItem("lu_token")}`}})
+        .then(res => res.json())
+        .catch(console.log(event))
+}

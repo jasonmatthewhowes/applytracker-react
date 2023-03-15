@@ -2,23 +2,14 @@
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { deleteResume, getResumes, getSingleResume, updateResume } from "../managers/ResumeManager"
+import { createResume, deleteResume, getResumes, getSingleResume, updateResume } from "../managers/ResumeManager"
 import { getAllRoles } from "../managers/RoleManager"
 import "./JobsList.css"
 
 
-export const ResumeEdit = () => {
+export const ResumeCreate = () => {
+ 
     const navigate = useNavigate()
-    const [jobList, setJobList] = useState([])
-    
-
-    /*
-        Since the input fields are bound to the values of
-        the properties of this state variable, you need to
-        provide some default values.
-    */
-       
-
     const [currentResume, setCurrentResume] = useState({
         id:0,
         user:0,
@@ -127,14 +118,13 @@ export const ResumeEdit = () => {
                     }
 
                     // Send POST request to your API
-                    updateResume(resume)
+                    createResume(resume)
                         .then(() => navigate("/resumes"))
                 }}
                 >Save</button>
                 <button onClick={ evt => {
-                    deleteResume(currentResume.id)
-                    .then(() => navigate("/resumes"))
-                }}>Delete</button>
+                    navigate("/resumes")
+                }}>Cancel</button>
         </form>
     )
 }

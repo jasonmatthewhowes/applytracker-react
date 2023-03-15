@@ -14,6 +14,7 @@ import { JobEdit } from "./pages/JobsEdit";
 import { JobCreate } from "./pages/JobsCreate";
 import { ResumeList } from "./pages/ResumeList";
 import { ResumeEdit } from "./pages/ResumeEdit";
+import { ResumeCreate } from "./pages/ResumeCreate";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/jobs" element={< JobList />} />
           <Route path="/resumes" element={< ResumeList />} />
           <Route path="/createjob" element={< JobCreate />} />
+          <Route path="/createresume" element={< ResumeCreate />} />
           <Route path="/login" element={< Login />} />
           <Route path="/jobs/edit/:jobId" element={< JobEdit />} />
           <Route path="/resumes/edit/:resumeId" element={< ResumeEdit />} />
