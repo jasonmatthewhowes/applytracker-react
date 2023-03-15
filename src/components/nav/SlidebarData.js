@@ -20,7 +20,7 @@ export const SidebarData = [
   },
   {
     title: "Resumes",
-    path: "/products",
+    path: "/resumes",
     icon: <IoIcons.IoIosPaper />,
     cName: "nav-text"
   },
