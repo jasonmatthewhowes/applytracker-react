@@ -36,7 +36,7 @@ const TableBody = ({ jobs, navigate }) =>
         {jobs.map(job => (
             <tr key={job.id}>
                 <td>{job.applied}</td>
-                <td>{job.companyjobs.name}</td>
+                <td>{job.company?.name}</td>
                 <td>{job.contact?.full_name}</td>
           <td><a href={job.cover_letter?.cover_letter_url} target="_blank">{job.cover_letter?.name}</a></td>
                 <td>{job.name}</td>

@@ -50,10 +50,7 @@ export const JobEdit = () => {
             name:""
         },
         timestamp:"",
-        companyjobs: {
-            id:0,
-            name:""
-        },
+        company:0,
         contact: {
             id:0,
             full_name:"",
@@ -68,6 +65,7 @@ export const JobEdit = () => {
     const [contactList, setContactList] = useState([])
     const [roleList, setRoleList] = useState([])
     const [jobServiceList, setJobServiceList] = useState([])
+    const [singleCompanyId, setSingleCompanyId] = useState()
 
     const { jobId } = useParams()
     
@@ -187,7 +185,7 @@ export const JobEdit = () => {
                 <select className="form-group" onChange={
                     (evt) => {
                     const copy= {...currentJob}
-                    copy.companyjobs.id= evt.target.value
+                    copy.company= evt.target.value
                     setCurrentJob(copy)
             }}>{companyList.map(option => (
                     <option key={option.id} value={option.id}>{option.name}</option>
@@ -262,7 +260,7 @@ export const JobEdit = () => {
                     description: currentJob.description,
                     job_service: parseInt(currentJob.job_service.id),
                     role: parseInt(currentJob.role.id),
-                    companyjobs: parseInt(currentJob.companyjobs.id),
+                    company: parseInt(currentJob.company),
                     contact: parseInt(currentJob.contact.id),
                     temperature: parseInt(currentJob.temperature)
                     }

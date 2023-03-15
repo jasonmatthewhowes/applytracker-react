@@ -1,26 +1,21 @@
 
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from 'react-router-dom'
-import { getCompanies } from "../managers/CompanyManager"
+import { createCompany, getCompanies } from "../managers/CompanyManager"
 import { getContacts } from "../managers/ContactManager"
 import { getCoverLetters } from "../managers/CoverLetterManager"
-import { getJobs, createJob, getSingleJob, updateJob, deleteJob, getJobServices } from "../managers/JobManager"
+import { getJobs, createJob, getSingleJob, updateJob, deleteJob, getJobServices, getLastJobId } from "../managers/JobManager"
 import { getResumes } from "../managers/ResumeManager"
 import { getAllRoles } from "../managers/RoleManager"
 import "./JobsList.css"
-// import { StaticExample } from "./CompanyCreate"
 
 
-export const JobCreate = () => {
+
+export const JobCreate = (props) => {
     const navigate = useNavigate()
     const [jobList, setJobList] = useState([])
     
 
-    /*
-        Since the input fields are bound to the values of
-        the properties of this state variable, you need to
-        provide some default values.
-    */
        
 
     const [currentJob, setCurrentJob] = useState({
@@ -51,8 +46,8 @@ export const JobCreate = () => {
             name:""
         },
         timestamp:"",
-        companyjobs: {
-            id:0,
+        company: {
+            id:null,
             name:""
         },
         contact: {
@@ -69,12 +64,9 @@ export const JobCreate = () => {
     const [contactList, setContactList] = useState([])
     const [roleList, setRoleList] = useState([])
     const [jobServiceList, setJobServiceList] = useState([])
+    const [showInput, setShowInput] = useState(false)
+    const [companyName, setCompanyName] = useState("")
 
-    // const { jobId } = useParams()
-    
-    // useEffect(() => {
-    //     getSingleJob(jobId).then(data => setCurrentJob(data))
-    // }, [])
 
     useEffect(() => {
         getJobs().then(data => setJobList(data))
@@ -97,8 +89,6 @@ export const JobCreate = () => {
     useEffect(() => {
         getJobServices().then(data => setJobServiceList(data))
     }, [])
-
-    
 
 
     /*
@@ -187,14 +177,25 @@ export const JobCreate = () => {
                 <select className="form-group" onChange={
                     (evt) => {
                     const copy= {...currentJob}
-                    copy.companyjobs.id= evt.target.value
+                    copy.company.id= evt.target.value
                     setCurrentJob(copy)
             }}>
-            <option value="">Select a company</option>
-            {companyList.map(option => (
-                    <option key={option.id} value={option.id}>{option.name}</option>
-                ))} </select>
                 
+           <option value="">Select a company</option>
+ {companyList.map(option => (
+         <option key={option.id} value={option.id}>{option.name}</option>
+     ))} </select> 
+     <label>
+         <input type="checkbox" onChange={() => setShowInput(!showInput)} /> Enter new Company Name
+     </label>
+     {showInput && <input type="text" onChange={(e) => setCompanyName(e.target.value)} />}
+     {showInput && <button onClick={() => {
+         let newCompany = {name: companyName};
+         createCompany(newCompany).then(() => {
+             getCompanies().then(data => setCompanyList(data)).then(() => setShowInput(false));
+         });
+     }}>Submit</button>}
+                <br></br>
                 <label>Resume:</label>
                <select className="form-group" onChange={
          (evt) => {
@@ -254,14 +255,14 @@ export const JobCreate = () => {
                 
             </fieldset>
 
-            {/* <StaticExample /> */}
+            
 
             <button type="submit"
                 onClick={evt => {
                  
                     evt.preventDefault()
-
-                    const job = {
+                    
+                    let job = {
                     id: parseInt(currentJob.id),
                     name: currentJob.name,
                     job_post_link:currentJob.job_post_link,
@@ -272,14 +273,20 @@ export const JobCreate = () => {
                     description: currentJob.description,
                     job_service: parseInt(currentJob.job_service.id),
                     role: parseInt(currentJob.role.id),
-                    companyjobs: parseInt(currentJob.companyjobs.id),
                     contact: parseInt(currentJob.contact.id),
-                    temperature: parseInt(currentJob.temperature)
+                    temperature: parseInt(currentJob.temperature),
+                    company: parseInt(currentJob.company.id)
                     }
+                    
 
                     // Send POST request to your API
                     createJob(job)
-                        .then(() => navigate("/jobs"))
+                    
+                    
+                        .then(() => {
+                            
+                            navigate("/jobs")
+                        })
                 }}
                 >Create</button>
                 <button onClick={ evt => {

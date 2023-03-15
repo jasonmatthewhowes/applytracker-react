@@ -35,3 +35,17 @@ export const updateCompany = (company) => {
     .catch(err => console.log(company))
 }
 
+export const createCompany = (event) => {
+    return fetch('http://localhost:8000/companies',
+        { method: "POST", body: JSON.stringify(event),
+        headers: {'Content-Type':'application/json',
+        "Authorization": `Token ${localStorage.getItem("lu_token")}`}})
+        .then(res => res.json())
+        .catch(console.log(event))
+}
+
+export const getLastCompanyId = () => {
+const companies = getCompanies();
+const lastCompanyId = companies.slice(-1)[0].id;
+return lastCompanyId
+}
