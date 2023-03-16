@@ -26,13 +26,19 @@ export const SidebarData = [
   },
   {
     title: "Cover Letters",
-    path: "/team",
+    path: "/coverletters",
     icon: <SlIcons.SlEnvolopeLetter />,
     cName: "nav-text"
   },
   {
     title: "Interviews",
-    path: "/",
+    path: "/interviews",
+    icon: <FaIcons.FaEnvelopeOpenText />,
+    cName: "nav-text"
+  },
+  {
+    title: "Contacts",
+    path: "/contacts",
     icon: <FaIcons.FaEnvelopeOpenText />,
     cName: "nav-text"
   },

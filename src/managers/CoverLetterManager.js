@@ -35,3 +35,11 @@ export const updateCoverLetter = (cover_letter) => {
     .catch(err => console.log(cover_letter))
 }
 
+export const createCoverLetter = (event) => {
+    return fetch('http://localhost:8000/cover_letters',
+        { method: "POST", body: JSON.stringify(event),
+        headers: {'Content-Type':'application/json',
+        "Authorization": `Token ${localStorage.getItem("lu_token")}`}})
+        .then(res => res.json())
+        .catch(console.log(event))
+}

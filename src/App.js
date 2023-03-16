@@ -15,6 +15,9 @@ import { JobCreate } from "./pages/JobsCreate";
 import { ResumeList } from "./pages/ResumeList";
 import { ResumeEdit } from "./pages/ResumeEdit";
 import { ResumeCreate } from "./pages/ResumeCreate";
+import { CoverLetterList } from "./pages/CoverLettersList";
+import { CoverLetterEdit } from "./pages/CoverLettersEdit";
+import { CoverLetterCreate } from "./pages/CoverLettersCreate";
 
 export default function App() {
   return (
@@ -27,10 +30,13 @@ export default function App() {
           <Route path="/jobs" element={< JobList />} />
           <Route path="/resumes" element={< ResumeList />} />
           <Route path="/createjob" element={< JobCreate />} />
+          <Route path="/createcoverletter" element={< CoverLetterCreate />} />
           <Route path="/createresume" element={< ResumeCreate />} />
+          <Route path="/coverletters" element={< CoverLetterList />} />
           <Route path="/login" element={< Login />} />
           <Route path="/jobs/edit/:jobId" element={< JobEdit />} />
           <Route path="/resumes/edit/:resumeId" element={< ResumeEdit />} />
+          <Route path="/coverletters/edit/:coverLetterId" element={< CoverLetterEdit />} />
         </Routes>
         </>
     

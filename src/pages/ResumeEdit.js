@@ -98,19 +98,17 @@ export const ResumeEdit = () => {
                             }}
                     />
                 </div>
-                <label>Role:</label>
+<label>Role:</label>
                 <select className="form-group" onChange={
                     (evt) => {
                     const copy= {...currentResume}
                     copy.role.id= evt.target.value
                     setCurrentResume(copy)
-            }}>{roleList.map(option => (
+            }} defaultValue={currentResume.role.name}>{roleList.map(option => (
                     <option key={option.id} value={option.id}>{option.name}</option>
                 ))} </select>
                 
-            </fieldset>
-
-        
+            </fieldset>        
 
             <button type="submit"
                 onClick={evt => {
