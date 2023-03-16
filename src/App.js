@@ -20,6 +20,10 @@ import { CoverLetterEdit } from "./pages/CoverLettersEdit";
 import { CoverLetterCreate } from "./pages/CoverLettersCreate";
 import { InterviewList } from "./pages/InterviewsList";
 import { InterviewEdit } from "./pages/InterviewsEdit";
+import { InterviewCreate } from "./pages/InterviewsCreate";
+import { ContactList } from "./pages/ContactsList";
+import { ContactEdit } from "./pages/ContactsEdit";
+import { ContactCreate } from "./pages/ContactsCreate";
 
 export default function App() {
   return (
@@ -30,15 +34,19 @@ export default function App() {
           <Route path="/" exact element={< Reports />} />
           <Route path="/products" element={< Reports />} />
           <Route path="/jobs" element={< JobList />} />
+          <Route path="/contacts" element={< ContactList />} />
           <Route path="/resumes" element={< ResumeList />} />
           <Route path="/interviews" element={< InterviewList/>} />
           <Route path="/createjob" element={< JobCreate />} />
           <Route path="/createcoverletter" element={< CoverLetterCreate />} />
           <Route path="/createresume" element={< ResumeCreate />} />
+          <Route path="/createcontact" element={< ContactCreate />} />
+          <Route path="/createinterview" element={< InterviewCreate />} />
           <Route path="/coverletters" element={< CoverLetterList />} />
           <Route path="/login" element={< Login />} />
           <Route path="/jobs/edit/:jobId" element={< JobEdit />} />
           <Route path="/interviews/edit/:interviewId" element={< InterviewEdit />} />
+          <Route path="/contacts/edit/:contactId" element={< ContactEdit />} />
           <Route path="/resumes/edit/:resumeId" element={< ResumeEdit />} />
           <Route path="/coverletters/edit/:coverLetterId" element={< CoverLetterEdit />} />
         </Routes>

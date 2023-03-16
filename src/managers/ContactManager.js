@@ -35,3 +35,11 @@ export const updateContact = (contact) => {
     .catch(err => console.log(contact))
 }
 
+export const createContact = (event) => {
+    return fetch('http://localhost:8000/contacts',
+        { method: "POST", body: JSON.stringify(event),
+        headers: {'Content-Type':'application/json',
+        "Authorization": `Token ${localStorage.getItem("lu_token")}`}})
+        .then(res => res.json())
+        .catch(console.log(event))
+}

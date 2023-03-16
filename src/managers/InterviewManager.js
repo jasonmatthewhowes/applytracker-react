@@ -7,6 +7,13 @@ export const getInterviews = () => {
         .then(response => response.json())
 }
 
+export const getLastInterviewId = () => {
+    return getInterviews()
+        .then(interviews => {
+            const lastInterview = interviews[interviews.length - 1];
+            return lastInterview.id;
+        });
+}
 
 
 export const deleteInterview = (interviewId) => {
