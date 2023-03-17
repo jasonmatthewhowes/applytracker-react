@@ -89,6 +89,18 @@ export const ContactEdit = () => {
                 </div>
                 
                 <div className="form-group">
+                    <label htmlFor="description">Email: </label>
+                    <input type="text" name="title" required autoFocus className="form-control"
+                        value={currentContact.email}
+                        onChange={
+                            (evt) => {
+                                const copy = {...currentContact}
+                                copy.email =evt.target.value
+                                setCurrentContact(copy)
+                            }}
+                    />
+                </div>
+                <div className="form-group">
                     <label htmlFor="description">Title: </label>
                     <input type="text" name="title" required autoFocus className="form-control"
                         value={currentContact.title}

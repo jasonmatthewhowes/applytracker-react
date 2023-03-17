@@ -39,9 +39,7 @@ export const ContactCreate = () => {
 
     const { contactId } = useParams()
     
-    useEffect(() => {
-        getSingleContact(contactId).then(data => setCurrentContact(data))
-    }, [])
+    
 
     useEffect(() => {
         getCompanies().then(data => setCompanyList(data))

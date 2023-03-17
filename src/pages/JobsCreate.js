@@ -101,7 +101,7 @@ export const JobCreate = (props) => {
             <h2 className="jobForm__title">Create a Job Opportunity</h2>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="name">Job Name: </label>
+                    <label htmlFor="name">Job Opportunity Name: </label>
                     <input type="text" name="title" required autoFocus className="form-control"
                         value={currentJob.name}
                         onChange={
@@ -114,7 +114,7 @@ export const JobCreate = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="name">Posting URL Link: </label>
-                    <input type="url" name="job_post_link" required autoFocus className="form-control"
+                    <input type="text" name="job_post_link" required autoFocus className="form-control"
                         value={currentJob.job_post_link}
                         onChange={
                             (evt) => {
@@ -185,6 +185,7 @@ export const JobCreate = (props) => {
  {companyList.map(option => (
          <option key={option.id} value={option.id}>{option.name}</option>
      ))} </select> 
+     {/* Below has an state watched to see if the check box is selected, if it is then an input field appears. On submit, the data from the input is sent to the company create API */}
      <label>
          <input type="checkbox" onChange={() => setShowInput(!showInput)} /> Enter new Company Name
      </label>

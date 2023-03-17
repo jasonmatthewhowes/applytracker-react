@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getContacts } from "../managers/ContactManager";
 
 import {
-    connectInterview,
+  connectInterview,
   deleteInterview,
   disconnectInterview,
   getInterviews,
@@ -125,28 +125,44 @@ export const InterviewEdit = () => {
             </option>
           ))}{" "}
         </select>
-        <button onClick={(evt) => {
-          const newContact = {
-            contact:parseInt(contactOne.contact)
-          }
-          connectInterview(currentInterview.id,newContact ).then(() =>
-          getSingleInterview(interviewId).then((data) => setCurrentInterview(data)));
-        }} >Add Contact to Interview</button>
+        {/* Below uses connect the many to many relationship by sending a custom action to the API */}
+        <button
+          onClick={(evt) => {
+            const newContact = {
+              contact: parseInt(contactOne.contact),
+            };
+            connectInterview(currentInterview.id, newContact).then(() =>
+              getSingleInterview(interviewId).then((data) =>
+                setCurrentInterview(data)
+              )
+            );
+          }}
+        >
+          Add Contact to Interview
+        </button>
       </fieldset>
-     <ul>
-   Attending Contacts
-   {currentInterview.interviewcontacts?.map((contact) => (
-     <li key={contact.id}>{contact.full_name} <button 
-     onClick={(evt) => {
-        const newContact = {
-          contact:parseInt(contact.id)
-        }
-        disconnectInterview(currentInterview.id,newContact ).then(() =>
-        getSingleInterview(interviewId).then((data) => setCurrentInterview(data)));
-      }} 
-     >Remove</button></li> 
-   ))}
- </ul>
+      <ul>
+        Attending Contacts
+        {currentInterview.interviewcontacts?.map((contact) => (
+          <li key={contact.id}>
+            {contact.full_name}{" "}
+            <button
+              onClick={(evt) => {
+                const newContact = {
+                  contact: parseInt(contact.id),
+                };
+                disconnectInterview(currentInterview.id, newContact).then(() =>
+                  getSingleInterview(interviewId).then((data) =>
+                    setCurrentInterview(data)
+                  )
+                );
+              }}
+            >
+              Remove
+            </button>
+          </li>
+        ))}
+      </ul>
 
       <button
         type="submit"

@@ -16,6 +16,7 @@ const TableHeader = () => (
             <th>Email</th>
             <th>Title</th>
             <th>Company</th>
+            <th>Detail</th>
             
             
             
@@ -68,7 +69,7 @@ export const ContactList = (props) => {
         </table>
         <button onClick={ evt => {
                      navigate("/createcontact")
-                }}>Add a new contact</button>
+                }}>Add a New Contact</button>
         </div>
         </>
     )
