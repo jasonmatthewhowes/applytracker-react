@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { createContact, deleteContact, getContacts, getSingleContact, updateContact } from "../managers/ContactManager"
-import { getAllCompanies, getCompanies } from "../managers/CompanyManager"
+import { createCompany, getAllCompanies, getCompanies } from "../managers/CompanyManager"
 import "./JobsList.css"
 
 
@@ -32,6 +32,9 @@ export const ContactCreate = () => {
             name:""
         }
     })
+
+    const [showInput, setShowInput] = useState(false)
+    const [companyName, setCompanyName] = useState("")
 
 
     const [companyList, setCompanyList] = useState([])
@@ -99,6 +102,18 @@ export const ContactCreate = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="description">Email: </label>
+                    <input type="text" name="title" required autoFocus className="form-control"
+                        value={currentContact.email}
+                        onChange={
+                            (evt) => {
+                                const copy = {...currentContact}
+                                copy.email =evt.target.value
+                                setCurrentContact(copy)
+                            }}
+                    />
+                </div>
+                <div className="form-group">
                     <label htmlFor="description">Phone: </label>
                     <input type="text" name="title" required autoFocus className="form-control"
                         value={currentContact.phone}
@@ -122,6 +137,16 @@ export const ContactCreate = () => {
                 {companyList.map(option => (
                     <option key={option.id} value={option.id}>{option.name}</option>
                 ))} </select>
+                <label>
+         <input type="checkbox" onChange={() => setShowInput(!showInput)} /> Enter new Company Name
+     </label>
+     {showInput && <input type="text" onChange={(e) => setCompanyName(e.target.value)} />}
+     {showInput && <button onClick={() => {
+         let newCompany = {name: companyName};
+         createCompany(newCompany).then(() => {
+             getCompanies().then(data => setCompanyList(data)).then(() => setShowInput(false));
+         });
+     }}>Submit</button>}
                 
             </fieldset>        
 

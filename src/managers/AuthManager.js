@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom"
+
 export const loginUser = (user) => {
   return fetch("http://localhost:8000/login", {
     method: "POST",
@@ -21,3 +23,10 @@ export const registerUser = (user) => {
   })
     .then(res => res.json())
 }
+export const logOut = () => {
+  
+  localStorage.removeItem("lu_token")
+      .then(() => {
+        useNavigate('/login')
+      })
+  }

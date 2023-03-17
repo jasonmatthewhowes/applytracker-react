@@ -9,8 +9,9 @@ export const getJobs = () => {
 
 
 
-export const deleteJob = (jobId) => {
-    fetch(`http://localhost:8000/jobs/${jobId}`,{
+export const deleteJob = (jobId,evt) => {
+    evt.preventDefault()
+    return fetch(`http://localhost:8000/jobs/${jobId}`,{
                     method:"DELETE", headers: {'Content-Type':'application/json',
                     "Authorization": `Token ${localStorage.getItem("lu_token")}`
                 }})

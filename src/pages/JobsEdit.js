@@ -126,7 +126,7 @@ export const JobEdit = () => {
         <div className="form-group">
           <label htmlFor="name">Posting URL Link: </label>
           <input
-            type="url"
+            type="text"
             name="job_post_link"
             required
             autoFocus
@@ -156,7 +156,9 @@ export const JobEdit = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="name">Temperature: <em>(1-10 where 10 is a hot lead)</em></label>
+          <label htmlFor="name">
+            Temperature: <em>(1-10 where 10 is a hot lead)</em>
+          </label>
           <input
             type="number"
             name="temperature"
@@ -331,18 +333,21 @@ export const JobEdit = () => {
       </button>
       <button
         onClick={(evt) => {
-          deleteJob(currentJob.id).then(() => navigate("/jobs"));
+          deleteJob(currentJob.id,evt).then(() => {
+            ;
+            navigate("/jobs");
+          });
         }}
       >
         Delete
       </button>
-     <button
-   onClick={(evt) => {
-     navigate("/jobs");
-   }}
- >
-   Cancel
- </button>
+      <button
+        onClick={(evt) => {
+          navigate("/jobs");
+        }}
+      >
+        Cancel
+      </button>
     </form>
   );
 };

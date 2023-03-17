@@ -10,6 +10,7 @@ import Products from "./pages/Products";
 import {Reports} from "./pages/Reports";
 import { JobList } from "./pages/JobsList";
 import { Login } from "./components/auth/Login";
+import { Register } from "./components/auth/Register";
 import { JobEdit } from "./pages/JobsEdit";
 import { JobCreate } from "./pages/JobsCreate";
 import { ResumeList } from "./pages/ResumeList";
@@ -24,6 +25,8 @@ import { InterviewCreate } from "./pages/InterviewsCreate";
 import { ContactList } from "./pages/ContactsList";
 import { ContactEdit } from "./pages/ContactsEdit";
 import { ContactCreate } from "./pages/ContactsCreate";
+import { LogOut } from "./components/auth/Logout";
+import { logOut } from "./managers/AuthManager";
 
 export default function App() {
   return (
@@ -31,7 +34,7 @@ export default function App() {
         <>
         <NavBar />
         <Routes>
-          <Route path="/" exact element={< Reports />} />
+          <Route path="/" exact element={< Home />} />
           <Route path="/products" element={< Reports />} />
           <Route path="/jobs" element={< JobList />} />
           <Route path="/contacts" element={< ContactList />} />
@@ -44,6 +47,8 @@ export default function App() {
           <Route path="/createinterview" element={< InterviewCreate />} />
           <Route path="/coverletters" element={< CoverLetterList />} />
           <Route path="/login" element={< Login />} />
+          <Route path="/logout" element={< LogOut />} />
+          <Route path="/register" element={< Register />} />
           <Route path="/jobs/edit/:jobId" element={< JobEdit />} />
           <Route path="/interviews/edit/:interviewId" element={< InterviewEdit />} />
           <Route path="/contacts/edit/:contactId" element={< ContactEdit />} />

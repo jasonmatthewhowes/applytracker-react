@@ -77,7 +77,7 @@ export const ContactEdit = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="name">LinkedIn URL: </label>
-                    <input type="url" name="contact_url" required autoFocus className="form-control"
+                    <input type="text" name="contact_url" required autoFocus className="form-control"
                         value={currentContact.linkedin_url}
                         onChange={
                             (evt) => {
